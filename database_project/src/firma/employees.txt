@@ -1,0 +1,4 @@
+1;Jan;Novak;1999;DataAnalytic;2:DOBRA,3:PRUMERNA
+2;Petr;Svoboda;2000;SecuritySpecialist;1:DOBRA
+3;Anna;Kralova;1998;DataAnalytic;1:PRUMERNA
+4;Eva;Dvorakova;2001;SecuritySpecialist;

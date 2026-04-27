@@ -1,12 +1,13 @@
 package firma;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         // Inicializace nástrojů
         Scanner scanner = new Scanner(System.in);
         CompanyManager manager = new CompanyManager();
+        EmployeeRepository repo = new FileEmployeeRepository();
         boolean runs = true;
 
         System.out.println("Vítejte v databázovém systému zaměstnanců!");
@@ -21,6 +22,9 @@ public class Main {
             System.out.println("5. Vypsat abecedně ve skupinách");
             System.out.println("6. Zobrazit statistiky firmy");
             System.out.println("7. Vypsat počty lidí ve skupinách");
+            System.out.println("8. Úložiť zamestnancov do databáze");
+            System.out.println("9. Načítať zamestnancov z databáze");
+            System.out.println("10. Přidat spolupráci");
             System.out.println("0. Ukončit program");
             System.out.print("Zadejte volbu: ");
 
@@ -66,14 +70,48 @@ public class Main {
                 case 7:
                     manager.showNumberOfPeople();
                     break;
+                case 8:
+                	repo.saveToFile(new ArrayList<>(manager.getAllEmployees().values()), "employees.txt");
+                    System.out.println("Uložené do súboru.");
+                    break;
+                case 9:
+                	List<Employee> loaded = repo.loadFromFile("employees.txt");
+                	manager.setEmployees(loaded);
+                	System.out.print("Načítané");
+                	break;
+                case 10:
+                    System.out.print("ID zaměstnance: ");
+                    int id1 = scanner.nextInt();
+
+                    System.out.print("ID kolegy: ");
+                    int id2 = scanner.nextInt();
+
+                    System.out.println("Kvalita (1 = SPATNA, 2 = PRUMERNA, 3 = DOBRA): ");
+                    int q = scanner.nextInt();
+
+                    CoopQuality quality;
+
+                    if (q == 1) quality = CoopQuality.SPATNA;
+                    else if (q == 2) quality = CoopQuality.PRUMERNA;
+                    else quality = CoopQuality.DOBRA;
+
+                    manager.addCoop(id1, id2, quality);
+                    break;
                 case 0:
                     runs = false;
                     System.out.println("Ukončuji program...");
                     break;
                 default:
                     System.out.println("Neplatná volba, zkuste to znovu.");
-            }
+                    
+                    
+            } 
+       
         }
+        System.out.println("Stlač ENTER...");
+        new java.util.Scanner(System.in).nextLine();
+        
         scanner.close();
+        
     }
 }

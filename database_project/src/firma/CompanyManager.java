@@ -2,6 +2,7 @@ package firma;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class CompanyManager {
     
@@ -25,6 +26,17 @@ public class CompanyManager {
         allEmployee.put(freeID, newEmployee);
         System.out.println("Byl přidán zaměstnanec: " + newEmployee.getName() + " " + newEmployee.getSurname() + " s ID: " + freeID);
         freeID++;
+    }
+    
+    public void setEmployees(List<Employee> employees) {
+        allEmployee.clear();
+
+        for (Employee e : employees) {
+            allEmployee.put(e.getId(), e);
+        }
+
+        // nastav freeID správne
+        freeID = allEmployee.keySet().stream().max(Integer::compare).orElse(0) + 1;
     }
 
     // Metoda pro přidání spolupráce mezi dvěma lidmi 
