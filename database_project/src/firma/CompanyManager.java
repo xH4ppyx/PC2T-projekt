@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+
+
 public class CompanyManager {
-    
     // Hlavní databáze všech zaměstnanců uložená v paměti
-    private Map<Integer, Employee> allEmployee;
+    public static Map<Integer, Employee> allEmployee;
     
     // Čítač pro automatické přidělování ID 
     private int freeID;
@@ -16,7 +17,7 @@ public class CompanyManager {
         this.allEmployee = new HashMap<>();
         this.freeID = 1; // Začínáme od ID 1
     }
-    
+ 
     
 
     // Metoda pro přidání zaměstnance 
@@ -176,7 +177,7 @@ public class CompanyManager {
     }
     
     // Získá celou databázi (budeme potřebovat pro Analytika a databázi)
-    public Map<Integer, Employee> getAllEmployees() {
+    public static Map<Integer, Employee> getAllEmployees() {
         return allEmployee;
     }
 }

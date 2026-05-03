@@ -2,6 +2,7 @@ package firma;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.HashSet;
 
 public class DataAnalytic extends Employee {
 
@@ -12,10 +13,28 @@ public class DataAnalytic extends Employee {
     @Override
     public void startSkill() {
     	Map<Integer, CoopQuality> myCoworkers = this.getCoworkers();
-        
+
         if (myCoworkers.isEmpty()) {
-            System.out.println("Nemám žádné spolupracovníky, rizikové skóre je 0.");
+            System.out.println("Nemám žádné spolupracovníky pro analýzu.");
             return;
         }
+
+        int maxCommon = -1;
+        Employee bestMatch = null;
+        
+        for (Integer coworkerId : myCoworkers.keySet()) {
+        	Employee coworker = CompanyManager.getAllEmployees().get(coworkerId);
+        	
+        	if (coworker == null) {
+        		continue;
+        	}
+        	Set<Integer> commonCoworkers = new HashSet<>(myCoworkers.keySet());
+        	commonCoworkers.retainAll(coworker.getCoworkers().keySet());
+        	commonCoworkers.remove(this.getId());
+
+        	int commonCount = commonCoworkers.size();
+        	
+        }
+        
     }
 }
