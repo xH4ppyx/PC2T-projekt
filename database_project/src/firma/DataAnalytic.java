@@ -11,6 +11,11 @@ public class DataAnalytic extends Employee {
 
     @Override
     public void startSkill() {
-        System.out.println("Zatím nemám žádné kolegy pro analýzu.");
+    	Map<Integer, CoopQuality> myCoworkers = this.getCoworkers();
+        
+        if (myCoworkers.isEmpty()) {
+            System.out.println("Nemám žádné spolupracovníky, rizikové skóre je 0.");
+            return;
+        }
     }
 }

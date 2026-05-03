@@ -1,0 +1,11 @@
+1;Jan;Novak;1995;DataAnalytic;2:DOBRA,3:PRUMERNA,5:DOBRA,
+2;Petr;Svoboda;1990;SecuritySpecialist;1:DOBRA,4:SPATNA,
+3;Anna;Kralova;1998;DataAnalytic;1:PRUMERNA,4:DOBRA,6:PRUMERNA,
+4;Eva;Dvorakova;1992;SecuritySpecialist;2:SPATNA,3:DOBRA,7:DOBRA,
+5;Tomas;Horak;1997;DataAnalytic;1:DOBRA,6:PRUMERNA,
+6;Lucie;Benesova;1994;SecuritySpecialist;3:PRUMERNA,5:PRUMERNA,7:SPATNA,
+7;Martin;Prochazka;1991;DataAnalytic;4:DOBRA,6:SPATNA,8:DOBRA,
+8;Veronika;Mala;1999;SecuritySpecialist;7:DOBRA,9:PRUMERNA,
+9;David;Kucera;1993;DataAnalytic;8:PRUMERNA,10:DOBRA,
+10;Sandra;Urbanova;1996;SecuritySpecialist;9:DOBRA,
+11;Oliver;Synak;2004;DataAnalytic;

@@ -1,5 +1,6 @@
 package firma;
 
+import java.io.File;
 import java.util.*;
 
 public class Main {
@@ -8,9 +9,16 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         CompanyManager manager = new CompanyManager();
         EmployeeRepository repo = new FileEmployeeRepository();
+        
+        List<Employee> loaded = repo.loadFromFile("src/firma/employees.txt");
+        manager.setEmployees(loaded);
+        
+        System.out.println("Vítejte v databázovém systému zaměstnanců!");
+
+        System.out.println("Načítaných zaměstnanců: " + loaded.size());
+        
         boolean runs = true;
 
-        System.out.println("Vítejte v databázovém systému zaměstnanců!");
 
         // Nekonečný cyklus pro zobrazení menu
         while (runs) {
@@ -22,9 +30,7 @@ public class Main {
             System.out.println("5. Vypsat abecedně ve skupinách");
             System.out.println("6. Zobrazit statistiky firmy");
             System.out.println("7. Vypsat počty lidí ve skupinách");
-            System.out.println("8. Úložiť zamestnancov do databáze");
-            System.out.println("9. Načítať zamestnancov z databáze");
-            System.out.println("10. Přidat spolupráci");
+            System.out.println("8. Přidat spolupráci");
             System.out.println("0. Ukončit program");
             System.out.print("Zadejte volbu: ");
 
@@ -53,7 +59,6 @@ public class Main {
                     manager.addEmployee(new SecuritySpecialist(0, nameSpec, surnameSpec, yearSpec));
                     break;
                 case 3:
-                    // Zde se volá metoda, kterou sis (snad) přidal do SpravceFirmy v minulém kroku
                     manager.showAllEmployee();
                     break;
                 case 4:
@@ -71,15 +76,6 @@ public class Main {
                     manager.showNumberOfPeople();
                     break;
                 case 8:
-                	repo.saveToFile(new ArrayList<>(manager.getAllEmployees().values()), "employees.txt");
-                    System.out.println("Uložené do súboru.");
-                    break;
-                case 9:
-                	List<Employee> loaded = repo.loadFromFile("employees.txt");
-                	manager.setEmployees(loaded);
-                	System.out.print("Načítané");
-                	break;
-                case 10:
                     System.out.print("ID zaměstnance: ");
                     int id1 = scanner.nextInt();
 
@@ -98,8 +94,9 @@ public class Main {
                     manager.addCoop(id1, id2, quality);
                     break;
                 case 0:
-                    runs = false;
-                    System.out.println("Ukončuji program...");
+                	repo.saveToFile(new ArrayList<>(manager.getAllEmployees().values()), "src/firma/employees.txt");
+                	runs = false;
+                	System.out.println("Data uložená. Ukončuji program...");
                     break;
                 default:
                     System.out.println("Neplatná volba, zkuste to znovu.");
@@ -108,10 +105,6 @@ public class Main {
             } 
        
         }
-        System.out.println("Stlač ENTER...");
-        new java.util.Scanner(System.in).nextLine();
-        
         scanner.close();
-        
     }
 }
