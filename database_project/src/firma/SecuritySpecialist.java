@@ -37,7 +37,7 @@ public class SecuritySpecialist extends Employee {
         double averageRisk = (double) totalScore / myCoworkers.size();
         double resultRisk = averageRisk * myCoworkers.size();
 
-        System.out.println("Bezpečnostní prověrka dokončena.");
+        System.out.println("----Bezpečnostní prověrka dokončena----");
         System.out.println("Počet sledovaných vazeb: " + myCoworkers.size());
         System.out.println("Vypočítané rizikové skóre: " + resultRisk);
     }

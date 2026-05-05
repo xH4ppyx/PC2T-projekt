@@ -41,6 +41,7 @@ public class Main {
             System.out.println("6. Zobrazit statistiky firmy");
             System.out.println("7. Vypsat počty lidí ve skupinách");
             System.out.println("8. Přidat spolupráci");
+            System.out.println("9. Spustit schpnost zaměstnance");
             System.out.println("0. Ukončit program");
             System.out.print("Zadejte volbu: ");
 
@@ -101,6 +102,19 @@ public class Main {
                     else quality = CoopQuality.DOBRA;
 
                     manager.addCoop(id1, id2, quality);
+                    break;
+                case 9:
+                	System.out.print("Zadejte ID zaměstnance: ");
+                    int skillId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Employee employee = manager.getAllEmployees().get(skillId);
+
+                    if (employee != null) {
+                        employee.startSkill();
+                    } else {
+                        System.out.println("Zaměstnanec nebyl nalezen.");
+                    }
                     break;
                 case 0:
                 	List<Employee> currentEmployees = new ArrayList<>(CompanyManager.getAllEmployees().values());
