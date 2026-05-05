@@ -22,32 +22,29 @@ public class DataAnalytic extends Employee {
         int maxCommon = -1;
         Employee bestMatch = null;
         
-        for (Integer coworkerId : myCoworkers.keySet()) {
-            Employee coworker = CompanyManager.getAllEmployees().get(coworkerId);
-            
-            if (coworker == null) {
+        for (Employee coworker : CompanyManager.getAllEmployees().values()) {
+
+            if (coworker.getId() == this.getId()) {
                 continue;
             }
             
-
             Set<Integer> commonCoworkers = new HashSet<>(myCoworkers.keySet());
-
+            
             commonCoworkers.retainAll(coworker.getCoworkers().keySet());
 
             commonCoworkers.remove(this.getId());
 
             int commonCount = commonCoworkers.size();
-            
+
             if (commonCount > maxCommon) {
                 maxCommon = commonCount;
                 bestMatch = coworker;
             }
         }
-        
+
         if (bestMatch != null) {
-            System.out.println("Spolupracovník s nejvíce společnými vazbami je: " 
-                + bestMatch.getName() + " " + bestMatch.getSurname() 
-                + " (ID: " + bestMatch.getId() + ") s celkem " + maxCommon + " společnými spolupracovníky.");
+            System.out.println("Spolupracovník s nejvíce společnými spolupracovníky je: " + bestMatch.getName() + " "
+                + bestMatch.getSurname() + " (ID: " + bestMatch.getId() + ") s celkem " + maxCommon + " společnými spolupracovníky.");
         } else {
             System.out.println("Nepodařilo se najít žádného spolupracovníka ke srovnání.");
         }
