@@ -7,22 +7,21 @@ import java.util.List;
 
 
 public class CompanyManager {
-    // Hlavní databáze všech zaměstnanců uložená v paměti
+    
     public static Map<Integer, Employee> allEmployee;
     
-    // Čítač pro automatické přidělování ID 
+
     private int freeID;
 
     public CompanyManager() {
         this.allEmployee = new HashMap<>();
-        this.freeID = 1; // Začínáme od ID 1
+        this.freeID = 1;
     }
  
     
 
-    // Metoda pro přidání zaměstnance 
+
     public void addEmployee(Employee newEmployee) {
-        // Automaticky přiřadíme volné ID a zvýšíme čítač
         newEmployee.setId(freeID);
         allEmployee.put(freeID, newEmployee);
         System.out.println("Byl přidán zaměstnanec: " + newEmployee.getName() + " " + newEmployee.getSurname() + " s ID: " + freeID);
@@ -36,11 +35,11 @@ public class CompanyManager {
             allEmployee.put(e.getId(), e);
         }
 
-        // nastav freeID správne
+
         freeID = allEmployee.keySet().stream().max(Integer::compare).orElse(0) + 1;
     }
 
-    // Metoda pro přidání spolupráce mezi dvěma lidmi 
+
     public void addCoop(int idEmployee, int idCoop, CoopQuality quality) {
         Employee z = allEmployee.get(idEmployee);
         Employee k = allEmployee.get(idCoop);
@@ -53,19 +52,15 @@ public class CompanyManager {
         }
     }
     
- // Metoda pro bezpečné odebrání zaměstnance včetně všech jeho vazeb 
+
     public void removeEmployee(int idToRemove) {
-        // Nejprve ověříme, zda zaměstnanec vůbec existuje
+
         if (allEmployee.containsKey(idToRemove)) {
-            
-            // 1. Smažeme ho z hlavní celofiremní evidence
+
             allEmployee.remove(idToRemove);
-            
-            // 2. Projdeme ÚPLNĚ VŠECHNY zbývající zaměstnance ve firmě
+
             for (Employee z : allEmployee.values()) {
-                // Pokusíme se smazat toto ID z jejich osobních seznamů.
-                // Metoda .remove() u Mapy neudělá nic, pokud tam to ID náhodou není, 
-                // takže to nespadne a je to bezpečné.
+
                 z.getCoworkers().remove(idToRemove);
             }
             
@@ -75,7 +70,7 @@ public class CompanyManager {
         }
     }
     
- // d) Vyhledání zaměstnance dle ID
+
     public void findEmployee(int id) {
         Employee z = allEmployee.get(id);
         if (z != null) {
@@ -87,7 +82,7 @@ public class CompanyManager {
         }
     }
 
-    // Výpis všech zaměstnanců (bude se hodit pro kontrolu)
+
     public void showAllEmployee() {
         if (allEmployee.isEmpty()) {
             System.out.println("Firma aktuálně nemá žádné zaměstnance.");
@@ -100,18 +95,16 @@ public class CompanyManager {
         System.out.println("--------------------------");
     }  
     
- // f) Abecední výpis zaměstnanců podle příjmení ve skupinách
+
     public void showABCGroup() {
         java.util.List<Employee> analysts = new java.util.ArrayList<>();
         java.util.List<Employee> specialists = new java.util.ArrayList<>();
 
-        // Rozdělení do skupin
         for (Employee z : allEmployee.values()) {
             if (z instanceof DataAnalytic) analysts.add(z);
             else if (z instanceof SecuritySpecialist) specialists.add(z);
         }
 
-        // Seřazení podle příjmení
         analysts.sort(java.util.Comparator.comparing(Employee::getSurname));
         specialists.sort(java.util.Comparator.comparing(Employee::getSurname));
 
@@ -122,7 +115,6 @@ public class CompanyManager {
         for (Employee s : specialists) System.out.println(s.getSurname() + " " + s.getName() + " (ID: " + s.getId() + ")");
     }
 
-    // g) Statistiky - převažující kvalita a nejvíce vazeb
     public void showStats() {
         if (allEmployee.isEmpty()) {
             System.out.println("Firma nemá žádné zaměstnance pro statistiku.");
@@ -134,13 +126,11 @@ public class CompanyManager {
         int countSpatna = 0, countPrumerna = 0, countDobra = 0;
 
         for (Employee z : allEmployee.values()) {
-            // Hledání nejvíce vazeb
             if (z.getCoworkers().size() > mostBonds) {
                 mostBonds = z.getCoworkers().size();
                 favoriteEmployee = z;
             }
 
-            // Sčítání kvalit spolupráce u tohoto zaměstnance
             for (CoopQuality uroven : z.getCoworkers().values()) {
                 if (uroven == CoopQuality.SPATNA) countSpatna++;
                 else if (uroven == CoopQuality.PRUMERNA) countPrumerna++;
@@ -155,7 +145,7 @@ public class CompanyManager {
             System.out.println("Zatím neexistují žádné vazby mezi zaměstnanci.");
         }
 
-        // Zjištění převažující kvality
+
         int maxAppreciation = Math.max(countSpatna, Math.max(countPrumerna, countDobra));
         if (maxAppreciation == 0) {
             System.out.println("Zatím nebyla hodnocena žádná spolupráce.");
@@ -164,7 +154,6 @@ public class CompanyManager {
         else System.out.println("Převažující kvalita spolupráce: ŠPATNÁ (" + countSpatna + "x)");
     }
 
-    // h) Výpis počtu zaměstnanců ve skupinách
     public void showNumberOfPeople() {
         int countAnalysts = 0, countSpecialists = 0;
         for (Employee z : allEmployee.values()) {
