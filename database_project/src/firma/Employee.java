@@ -9,7 +9,7 @@ public abstract class Employee {
     protected String surname;
     protected int birthyear;
 
-    // Dynamická datová struktura pro evidenci spolupráce (ID kolegy -> úroveň spolupráce) 
+
     private Map<Integer, CoopQuality> coworkers;
 
     public int getId() {
@@ -56,11 +56,11 @@ public abstract class Employee {
         this.name = name;
         this.surname = surname;
         this.birthyear = Birthyear;
-        // Inicializace mapy (zde budeme ukládat např. klíč 5 = "dobrá")
+
         this.coworkers = new HashMap<>();
     }
 
-    // Abstraktní metoda pro specifické dovednosti skupin [cite: 14, 25]
+
     public abstract void startSkill();
 
 }
