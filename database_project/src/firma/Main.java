@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        // Inicializace nástrojů
+
         Scanner scanner = new Scanner(System.in);
         CompanyManager manager = new CompanyManager();
         EmployeeRepository repo = new FileEmployeeRepository();
@@ -20,7 +20,6 @@ public class Main {
         boolean runs = true;
 
 
-        // Nekonečný cyklus pro zobrazení menu
         while (runs) {
         	System.out.println("\n=== HLAVNÍ MENU ===");
             System.out.println("1. Přidat datového analytika");
@@ -34,9 +33,8 @@ public class Main {
             System.out.println("0. Ukončit program");
             System.out.print("Zadejte volbu: ");
 
-            // Ošetření vstupu (aby to nespadlo, když uživatel zadá písmeno místo čísla, budeme řešit později)
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Tohle je důležité: "sežere" to prázdný znak Enteru po zadání čísla
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -46,7 +44,7 @@ public class Main {
                     String surname = scanner.nextLine();
                     System.out.print("Rok narození: ");
                     int year = scanner.nextInt();
-                    // ID dáváme 0, protože Správce si ho stejně automaticky přepíše na správné
+
                     manager.addEmployee(new DataAnalytic(0, name, surname, year));
                     break;
                 case 2:
