@@ -19,7 +19,6 @@ public class SecuritySpecialist extends Employee {
 
         int totalScore = 0;
 
-        // Špatná = +10 rizikových bodů, Průměrná = +5 bodů, Dobrá = -2 body (snižuje riziko)
         for (CoopQuality level : myCoworkers.values()) {
             switch (level) {
                 case SPATNA:
@@ -34,7 +33,7 @@ public class SecuritySpecialist extends Employee {
             }
         }
 
-        // Výpočet průměru a vynásobení počtem lidí (čím více lidí, tím větší šance úniku dat)
+
         double averageRisk = (double) totalScore / myCoworkers.size();
         double resultRisk = averageRisk * myCoworkers.size();
 
