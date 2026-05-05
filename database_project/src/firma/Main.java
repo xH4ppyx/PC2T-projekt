@@ -8,14 +8,25 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         CompanyManager manager = new CompanyManager();
-        EmployeeRepository repo = new FileEmployeeRepository();
         
-        List<Employee> loaded = repo.loadFromFile("src/firma/employees.txt");
-        manager.setEmployees(loaded);
+        EmployeeRepository fileRepo = new FileEmployeeRepository();
+        EmployeeRepository sqlRepo = new SQLEmployeeRepository();
         
+        File txtFile = new File("src/firma/employees.txt");
+
+        if (txtFile.exists()) {
+            List<Employee> loaded = fileRepo.loadFromFile("src/firma/employees.txt");
+            manager.setEmployees(loaded);
+            System.out.println("Načteno ze souboru TXT.");
+        } else {
+            List<Employee> loaded = sqlRepo.loadFromFile("src/firma/employees.db");
+            manager.setEmployees(loaded);
+            System.out.println("TXT soubor nenalezen, načtena SQL záloha.");
+        }
+ 
         System.out.println("Vítejte v databázovém systému zaměstnanců!");
 
-        System.out.println("Načítaných zaměstnanců: " + loaded.size());
+        System.out.println("Načítaných zaměstnanců: " + CompanyManager.getAllEmployees().size());
         
         boolean runs = true;
 
@@ -92,8 +103,14 @@ public class Main {
                     manager.addCoop(id1, id2, quality);
                     break;
                 case 0:
-                	repo.saveToFile(new ArrayList<>(manager.getAllEmployees().values()), "src/firma/employees.txt");
+                	List<Employee> currentEmployees = new ArrayList<>(CompanyManager.getAllEmployees().values());
+
+		            fileRepo.saveToFile(currentEmployees, "src/firma/employees.txt");
+		
+		            sqlRepo.saveToFile(currentEmployees, "src/firma/employees.db");
+                	
                 	runs = false;
+                	
                 	System.out.println("Data uložená. Ukončuji program...");
                     break;
                 default:
